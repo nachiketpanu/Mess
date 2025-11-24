@@ -1,0 +1,25 @@
+User:
+    Index.php
+    Applicationform.php
+    Signin.php
+    Userdetail.php
+    logout.php
+
+Admin:
+    School:
+        Index.php
+        Admin.php
+        Applicationform.php
+        Read.php
+        Show.php
+        Delete.php
+        logout.php
+    Devloper:
+        Index.php
+        Applicationform.php
+        Signup.php
+        AdminRead.php
+        Read.php
+        Show.php
+        Delete.php
+        logout.php

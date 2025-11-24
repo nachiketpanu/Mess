@@ -1,0 +1,151 @@
+<?php
+require_once 'conn.php';
+
+if(empty($_SESSION) || $_SESSION['role'] != 'devloper'){
+    header("location:login.php");
+    exit;
+}
+
+
+if (isset($_POST['submit'])){
+        
+    $fname = $_POST['fname'];
+    $uname = $_POST['uname'];
+    $pass = $_POST['pass'];
+                
+    $sql = "insert into school (fname,uname,pass) values (:fname, :uname, :pass)";
+                
+    $query = $conn -> prepare($sql);
+                
+    $query -> bindParam(':fname', $fname, PDO::PARAM_STR);
+    $query -> bindParam(':uname', $uname, PDO::PARAM_STR);
+    $query -> bindParam(':pass', $pass, PDO::PARAM_STR);
+                
+    if ($query -> execute()) {
+        echo "<script>
+        alert('Record Successfully Insert');
+        Window.location.href='Admin_Read.php';
+        </script>";
+    }else{
+        echo"<script>alert('Record Insert Error !')";
+    }
+}
+?>
+
+<!-- HTML Login Form -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Admin Signup page</title>
+	<link rel="stylesheet" href="bootstrap-5.3.2-dist\css\bootstrap.min.css">
+</head>
+<body class="img"> 
+    <nav class="navbar navbar-expand-lg navbar-light bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="Admin.php">
+                <img src="logo.PNG" alt="Logo" width="50" height="50" class="d-inline-block align-text-top">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a href="index.php" class="btn ms-auto p-2 text-light bd-highlight">Home</a>
+                        <a href="Admin_Read.php" class="btn ms-auto p-2 text-light bd-highlight">Admin Details</a>
+                        <a href="read.php" class="btn ms-auto p-2 text-light bd-highlight">User Details</a>
+                    </li>
+                    <?php if (!empty($_SESSION)) { ?>
+                        <li class="nav-item">
+                            <a class="btn btn-danger text-light ms-2" href="logout.php">Logout</a>
+                        </li>
+                    <?php } ?>
+                </ul>
+            </div>
+        </div>
+    </nav>
+	<div class="row">
+        <div class="col-sm-4"></div>
+        <div class="col-sm-4 ">
+            <div class="card my-5">
+                <form class="blure" method="post">
+                    <h1 class="ms-5 text-primary">Admin Signup</h1><br><br>
+                    <label class="ms-2">Name:-</label>
+                    <input type="text" name="fname"><br><br>
+                    <label class="ms-2">User Name:-</label>
+                    <input type="text" name="uname"><br><br>
+                    <label class="ms-2"> Password :- </label>
+                    <input type="password" name="pass"><br><br>
+                    <input class="d-grid gap-2 col-6 mx-5 btn btn-primary" name="submit" type="submit" value="submit">
+                </form>
+            </div>
+        </div>
+        <div class="col-sm-4"></div>
+    </div>
+    <footer class="bg-primary text-white py-4">
+    <div class="container">
+        <div class="row">
+            <!-- Logo and Contact -->
+            <div class="col-md-3 text-center">
+                <a class="navbar-brand" href="Admin.php">
+                    <img src="logo.PNG" alt="Logo" width="50" height="50" class="d-block mx-auto">
+                </a>
+                <p class="mt-3">Contact Us</p>
+                <p>Privacy Policy</p>
+            </div>
+            
+            <!-- Site Map -->
+            <div class="col-md-3">
+                <h5 class="mb-3">Site Map</h5>
+                <ul class="list-unstyled">
+                    <li><a href="Index.php" class="text-white" style="text-decoration: none;">Home</a></li>
+                    <li><a href="Signin.php" class="text-white" style="text-decoration: none;">Sign In</a></li>
+                    <li><a href="Signup.php" class="text-white" style="text-decoration: none;">Sign Up</a></li>
+                    <li><a href="Admin.php" class="text-white" style="text-decoration: none;">Admin</a></li>
+                    <li><a href="UserDetails.php" class="text-white" style="text-decoration: none;">User Details</a></li>
+                    <li><a href="Admin_Read.php" class="text-white" style="text-decoration: none;">Admin Details</a></li>
+                </ul>
+            </div>
+            
+            <!-- Social Media -->
+            <div class="col-md-3">
+                <h5 class="mb-3">Follow Us</h5>
+                <ul class="list-unstyled">
+                    <li><a href="#" class="text-white" style="text-decoration: none;">Instagram</a></li>
+                    <li><a href="#" class="text-white" style="text-decoration: none;">WhatsApp</a></li>
+                    <li><a href="#" class="text-white" style="text-decoration: none;">Facebook</a></li>
+                    <li><a href="#" class="text-white" style="text-decoration: none;">Twitter</a></li>
+                    <li><a href="#" class="text-white" style="text-decoration: none;">YouTube</a></li>
+                </ul>
+            </div>
+            
+            <!-- Contact Info -->
+            <div class="col-md-3">
+                <h5 class="mb-3">Contact</h5>
+                <ul class="list-unstyled">
+                    <li>Email: mess@gmail.com</li>
+                    <li>Phone: 8542639854</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Feedback Form -->
+        <!-- <div class="row mt-4">
+            <div class="col-md-6 mx-auto">
+                <form method="post" class="d-flex">
+                    <input type="text" name="feedback" id="feedback" placeholder="Your Feedback" class="form-control">
+                    <button type="submit" class="btn btn-danger ms-2">Submit</button>
+                </form>
+            </div>
+        </div> -->
+        
+        <!-- Copyright -->
+        <div class="text-center mt-4">
+            <p>&copy; 2025 Pranav Shinde. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+</body>		
+</html>
